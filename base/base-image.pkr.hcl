@@ -28,12 +28,6 @@ source "azure-arm" "ubuntu" {
   managed_image_name                = "strawbtest-demo-base-v0.1.0"
 
   ssh_username = "ubuntu"
-
-  // TODO: investigate how to share cross-region
-  //
-  // Might be doable with Shared Image Galleries... but that may not actually be what I want
-  // https://github.com/hashicorp/packer-plugin-azure/issues/20
-  // At the very least, Shared Image Gallery image versions do not show up in HCP Packer
 }
 
 source "amazon-ebs" "ubuntu" {
@@ -56,7 +50,7 @@ source "amazon-ebs" "ubuntu" {
     Purpose = "Base Image for Packer Demo"
     TTL     = "24h"
     Packer  = true
-    Source  = "https://github.com/hashi-strawb/packer-golden-image"
+    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/base/"
   }
 
   source_ami_filter {
