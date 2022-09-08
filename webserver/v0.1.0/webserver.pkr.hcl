@@ -14,21 +14,21 @@ packer {
 
 data "hcp-packer-iteration" "base-image" {
   bucket_name = "base-image"
-  channel = "production"
+  channel     = "production"
 }
 
 
 data "hcp-packer-image" "azure-base-image" {
-  bucket_name = "base-image"
-  iteration_id = data.hcp-packer-iteration.base-image.id
+  bucket_name    = "base-image"
+  iteration_id   = data.hcp-packer-iteration.base-image.id
   cloud_provider = "azure"
-  region = "uksouth"
+  region         = "uksouth"
 }
 source "azure-arm" "base" {
   use_azure_cli_auth = true
 
-  os_type = data.hcp-packer-image.azure-base-image.labels["os_type"]
-  custom_managed_image_name = data.hcp-packer-image.azure-base-image.labels["managed_image_name"]
+  os_type                                  = data.hcp-packer-image.azure-base-image.labels["os_type"]
+  custom_managed_image_name                = data.hcp-packer-image.azure-base-image.labels["managed_image_name"]
   custom_managed_image_resource_group_name = data.hcp-packer-image.azure-base-image.labels["managed_image_resourcegroup_name"]
 
   vm_size = "Standard_B1ls"
@@ -43,10 +43,10 @@ source "azure-arm" "base" {
 
 
 data "hcp-packer-image" "aws-base-image" {
-  bucket_name = "base-image"
-  iteration_id = data.hcp-packer-iteration.base-image.id
+  bucket_name    = "base-image"
+  iteration_id   = data.hcp-packer-iteration.base-image.id
   cloud_provider = "aws"
-  region = "eu-west-2"
+  region         = "eu-west-2"
 }
 source "amazon-ebs" "base" {
   ami_name = "strawbtest/demo/webserver-from-base/v0.1.0"
@@ -57,7 +57,7 @@ source "amazon-ebs" "base" {
   region = "eu-west-2"
 
   # Source AMI from HCP Packer
-  source_ami       = data.hcp-packer-image.aws-base-image.id
+  source_ami = data.hcp-packer-image.aws-base-image.id
 
   # region to deploy to
   ami_regions = [
@@ -71,7 +71,7 @@ source "amazon-ebs" "base" {
     Purpose = "Dummy Webserver for TFC Demo"
     TTL     = "24h"
     Packer  = true
-    Source = "https://github.com/hashi-strawb/packer-golden-image/tree/main/webserver/v0.1.0/"
+    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/webserver/v0.1.0/"
   }
 
 
@@ -80,24 +80,6 @@ source "amazon-ebs" "base" {
 
 build {
   name = "webserver"
-
-  hcp_packer_registry {
-    bucket_name = "webserver"
-
-    description = <<EOT
-Dummy webserver for demonstration purposes
-    EOT
-
-    bucket_labels = {
-      "owner" = "platform-team"
-    }
-
-    build_labels = {
-      "os"             = "Ubuntu"
-      "ubuntu-version" = "Focal 20.04"
-      "version"        = "v0.1.0"
-    }
-  }
 
   sources = [
     "source.amazon-ebs.base",
@@ -115,5 +97,23 @@ Dummy webserver for demonstration purposes
       "sudo apt-get -yq install nginx",
       "sudo mv /home/ubuntu/index.html /var/www/html/index.html",
     ]
+  }
+
+  hcp_packer_registry {
+    bucket_name = "webserver"
+
+    description = <<EOT
+Dummy webserver for demonstration purposes
+    EOT
+
+    bucket_labels = {
+      "owner" = "platform-team"
+    }
+
+    build_labels = {
+      "os"             = "Ubuntu"
+      "ubuntu-version" = "Focal 20.04"
+      "version"        = "v0.1.0"
+    }
   }
 }

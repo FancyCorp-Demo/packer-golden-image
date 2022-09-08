@@ -70,6 +70,15 @@ source "amazon-ebs" "ubuntu" {
 build {
   name = "provision"
 
+  sources = [
+    "source.amazon-ebs.ubuntu",
+    "source.azure-arm.ubuntu",
+  ]
+
+  provisioner "shell" {
+    script = "provision.sh"
+  }
+
   hcp_packer_registry {
     bucket_name = "base-image"
 
@@ -86,14 +95,5 @@ Golden Base Image
       "ubuntu-version" = "Focal 20.04"
       "version"        = "v0.1.0"
     }
-  }
-
-  sources = [
-    "source.amazon-ebs.ubuntu",
-    "source.azure-arm.ubuntu",
-  ]
-
-  provisioner "shell" {
-    script = "provision.sh"
   }
 }
