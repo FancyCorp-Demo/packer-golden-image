@@ -1,4 +1,4 @@
-.PHONY terraform base webserver build
+.PHONY: terraform base webserver build
 
 default: build
 
