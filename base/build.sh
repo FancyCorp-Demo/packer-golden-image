@@ -27,4 +27,10 @@ echo
 echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
+
 par channels set-iteration base-image dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
+
+# This is where you'd do validation before promoting...
+
+
+par channels set-iteration base-image production --fingerprint $HCP_PACKER_BUILD_FINGERPRINT

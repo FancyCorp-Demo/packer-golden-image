@@ -28,3 +28,5 @@ echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
 par channels set-iteration webserver dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
+
+par channels set-iteration webserver production --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
