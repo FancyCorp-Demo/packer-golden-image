@@ -12,6 +12,10 @@ packer {
   }
 }
 
+local "suffix" {
+  expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
+}
+
 data "hcp-packer-iteration" "base-image" {
   bucket_name = "base-image"
   channel     = "production"
@@ -36,7 +40,7 @@ source "azure-arm" "base" {
   build_resource_group_name = "strawb-packerdemo"
 
   managed_image_resource_group_name = "strawb-packerdemo"
-  managed_image_name                = "strawbtest-demo-webserver-from-base-v0.1.0"
+  managed_image_name                = "strawbtest-demo-webserver-from-base-v0.1.0-${local.suffix}"
 
   ssh_username = "ubuntu"
 }
@@ -49,7 +53,7 @@ data "hcp-packer-image" "aws-base-image" {
   region         = "eu-west-2"
 }
 source "amazon-ebs" "base" {
-  ami_name = "strawbtest/demo/webserver-from-base/v0.1.0"
+  ami_name = "strawbtest/demo/webserver-from-base/v0.1.0/${local.suffix}"
 
   instance_type = "t2.micro"
 

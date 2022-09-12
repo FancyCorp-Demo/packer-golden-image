@@ -12,6 +12,10 @@ packer {
   }
 }
 
+local "suffix" {
+  expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
+}
+
 source "azure-arm" "ubuntu" {
   use_azure_cli_auth = true
 
@@ -25,13 +29,13 @@ source "azure-arm" "ubuntu" {
   build_resource_group_name = "strawb-packerdemo"
 
   managed_image_resource_group_name = "strawb-packerdemo"
-  managed_image_name                = "strawbtest-demo-base-v0.1.0"
+  managed_image_name                = "strawbtest-demo-base-v0.1.0-${local.suffix}"
 
   ssh_username = "ubuntu"
 }
 
 source "amazon-ebs" "ubuntu" {
-  ami_name = "strawbtest/demo/base/v0.1.0"
+  ami_name = "strawbtest/demo/base/v0.1.0/${local.suffix}"
 
   instance_type = "t2.micro"
 
