@@ -39,24 +39,6 @@ source "amazon-ebs" "ubuntu" {
 
   instance_type = "t2.micro"
 
-  # region to build in
-  region = "eu-west-2"
-
-  # region to deploy to
-  ami_regions = [
-    "eu-west-1",
-    "eu-west-2",
-  ]
-
-  tags = {
-    Name    = "StrawbTest"
-    Owner   = "lucy.davinhart@hashicorp.com"
-    Purpose = "Base Image for Packer Demo"
-    TTL     = "24h"
-    Packer  = true
-    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/base/"
-  }
-
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
@@ -66,6 +48,30 @@ source "amazon-ebs" "ubuntu" {
 
     most_recent = true
     owners      = ["099720109477"]
+  }
+
+  # region to build in
+  region = "eu-west-2"
+
+  # region to deploy to
+  ami_regions = [
+    "eu-west-1",
+    "eu-west-2",
+  ]
+
+  # And accounts allowed to use it
+  ami_users = [
+    "711129375688", # se_demos_dev
+    "564784738291", # sandbox
+  ]
+
+  tags = {
+    Name    = "StrawbTest"
+    Owner   = "lucy.davinhart@hashicorp.com"
+    Purpose = "Base Image for Packer Demo"
+    TTL     = "24h"
+    Packer  = true
+    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/base/"
   }
 
   ssh_username = "ubuntu"

@@ -69,6 +69,12 @@ source "amazon-ebs" "base" {
     "eu-west-2",
   ]
 
+  # And accounts allowed to use it
+  ami_users = [
+    "711129375688", # se_demos_dev
+    "564784738291", # sandbox
+  ]
+
   tags = {
     Name    = "StrawbTest"
     Owner   = "lucy.davinhart@hashicorp.com"

@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+set -o pipefail
+
 export HCP_PACKER_BUILD_FINGERPRINT=v0.1.0-$(date +%F_%H-%M-%S)
 
 echo ========================================
@@ -7,11 +9,10 @@ echo Getting Creds from Doormat
 echo ========================================
 
 # AWS
-doormat login -v || doormat -r && eval $(doormat aws export --account se_demos_dev)
+doormat login -v || doormat login && eval $(doormat aws export --account aws_lucy.davinhart_test)
 
 # Azure
 # Not needed, as we can use the CLI creds
-
 
 
 echo
