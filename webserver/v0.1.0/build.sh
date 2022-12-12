@@ -29,6 +29,7 @@ echo
 echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
+# TODO: remove the dev channel, as we already have a "latest" channel
 par channels set-iteration webserver dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
 
 par channels set-iteration webserver production --fingerprint $HCP_PACKER_BUILD_FINGERPRINT

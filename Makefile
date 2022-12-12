@@ -16,9 +16,11 @@ base:
 	@echo "Building Base Image"
 	@echo "========================================"
 	cd base && ./build.sh
+# TODO: Build a second time, so we have a newer non-prod image
 
 webserver:
 	@echo "========================================"
 	@echo "Building Webserver Image"
 	@echo "========================================"
 	cd webserver/v0.1.0 && ./build.sh
+# TODO: Build a second time, so we have a newer non-prod image
