@@ -79,10 +79,13 @@ source "amazon-ebs" "base" {
     Name    = "StrawbTest"
     Owner   = "lucy.davinhart@hashicorp.com"
     Purpose = "Dummy Webserver for TFC Demo"
-    TTL     = "24h"
+    TTL     = "30d"
     Packer  = true
     Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/webserver/v0.1.0/"
   }
+
+  # Tell AWS to deprecate the image after 30 days
+  deprecate_at = timeadd(timestamp(), "720h")
 
 
   ssh_username = "ubuntu"

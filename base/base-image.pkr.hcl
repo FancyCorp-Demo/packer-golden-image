@@ -69,10 +69,13 @@ source "amazon-ebs" "ubuntu" {
     Name    = "StrawbTest"
     Owner   = "lucy.davinhart@hashicorp.com"
     Purpose = "Base Image for Packer Demo"
-    TTL     = "24h"
+    TTL     = "30d"
     Packer  = true
     Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/base/"
   }
+
+  # Tell AWS to deprecate the image after 30 days
+  deprecate_at = timeadd(timestamp(), "720h")
 
   ssh_username = "ubuntu"
 }
