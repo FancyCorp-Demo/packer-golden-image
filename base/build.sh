@@ -29,9 +29,14 @@ echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
 
+# TODO: remove this in future, as `latest` exists
 par channels set-iteration base-image dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
 
 # This is where you'd do validation before promoting...
 
 
-par channels set-iteration base-image production --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
+
+# Get iteration ID from `latest` channel, and set to Prod
+iteration_id=$(par channels get-iteration base-image latest)
+
+par channels set-iteration base-image production ${iteration_id}

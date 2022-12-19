@@ -29,7 +29,15 @@ echo
 echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
-# TODO: remove the dev channel, as we already have a "latest" channel
+
+# TODO: remove this in future, as `latest` exists
 par channels set-iteration webserver dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
 
-par channels set-iteration webserver production --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
+# This is where you'd do validation before promoting...
+
+
+
+# Get iteration ID from `latest` channel, and set to Prod
+iteration_id=$(par channels get-iteration webserver latest)
+
+par channels set-iteration webserver production ${iteration_id}
