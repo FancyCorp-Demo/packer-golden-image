@@ -8,7 +8,7 @@ terraform:
 	@echo "========================================"
 	@echo "Provisioning TF Resources"
 	@echo "========================================"
-	cd ./terraform && terraform apply -auto-approve
+	cd ./terraform && terraform init && terraform apply -auto-approve
 
 
 base:
