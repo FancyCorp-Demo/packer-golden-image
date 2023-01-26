@@ -2,7 +2,9 @@
 set -e
 set -o pipefail
 
-export HCP_PACKER_BUILD_FINGERPRINT=v0.1.0-$(date +%F_%H-%M-%S)
+if [[ "$1" == "--no-channel" ]]; then
+	echo Starting a no-channel build...
+fi
 
 echo ========================================
 echo Getting Creds from Doormat
@@ -25,13 +27,22 @@ packer build -force .
 
 
 
+# If we want to build without assigning to a channel...
+# i.e. if we want to have a newer version of the image we can upgrade to
+if [[ "$1" == "--no-channel" ]]; then
+	echo
+	echo ========================================
+	echo Skipping HCP Packer Channel Assignment
+	echo ========================================
+
+	exit 0
+fi
+
+
 echo
 echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
-
-# TODO: remove this in future, as `latest` exists
-par channels set-iteration webserver dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
 
 # This is where you'd do validation before promoting...
 

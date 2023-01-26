@@ -2,8 +2,6 @@
 set -e
 set -o pipefail
 
-export HCP_PACKER_BUILD_FINGERPRINT=v0.1.0-$(date +%F_%H-%M-%S)
-
 echo ========================================
 echo Getting Creds from Doormat
 echo ========================================
@@ -28,9 +26,6 @@ echo
 echo ========================================
 echo Updating HCP Packer Channel
 echo ========================================
-
-# TODO: remove this in future, as `latest` exists
-par channels set-iteration base-image dev --fingerprint $HCP_PACKER_BUILD_FINGERPRINT
 
 # This is where you'd do validation before promoting...
 
