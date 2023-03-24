@@ -125,7 +125,7 @@ Dummy webserver for demonstration purposes
 
     build_labels = {
       "os"             = "Ubuntu"
-      "ubuntu-version" = "Focal 20.04"
+      "ubuntu-version" = "Jammy 22.04"
       "version"        = "v0.1.0"
     }
   }

@@ -21,8 +21,8 @@ source "azure-arm" "ubuntu" {
 
   os_type         = "Linux"
   image_publisher = "canonical"
-  image_offer     = "0001-com-ubuntu-server-focal"
-  image_sku       = "20_04-lts-gen2"
+  image_offer     = "0001-com-ubuntu-server-jammy"
+  image_sku       = "22_04-lts-gen2"
 
   vm_size = "Standard_B1ls"
 
@@ -41,7 +41,7 @@ source "amazon-ebs" "ubuntu" {
 
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
+      name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
@@ -105,7 +105,7 @@ Golden Base Image
 
     build_labels = {
       "os"             = "Ubuntu"
-      "ubuntu-version" = "Focal 20.04"
+      "ubuntu-version" = "Jammy 22.04"
       "version"        = "v0.1.0"
     }
   }
