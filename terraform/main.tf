@@ -18,7 +18,8 @@ variable "location" {
 
 variable "resource_group_tags" {
   default = {
-    Terraform = "true"
+    Terraform   = "true"
+    DoNotDelete = "True"
   }
 }
 
