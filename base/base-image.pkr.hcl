@@ -1,12 +1,12 @@
 packer {
   required_plugins {
     amazon = {
-      version = ">= 1.0.4"
+      version = ">= 1.1.0" # for SSH stuff https://github.com/hashicorp/packer-plugin-amazon/releases/tag/v1.1.0
       source  = "github.com/hashicorp/amazon"
     }
 
     azure = {
-      version = ">= 1.0.0"
+      version = ">= 1.0.7" # again https://github.com/hashicorp/packer-plugin-azure/releases/tag/v1.0.7
       source  = "github.com/hashicorp/azure"
     }
   }

@@ -22,7 +22,7 @@ echo
 echo ========================================
 echo Building image ${HCP_PACKER_BUILD_FINGERPRINT}
 echo ========================================
-packer init .
+packer init -upgrade .
 packer build -force .
 
 
