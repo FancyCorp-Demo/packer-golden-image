@@ -5,10 +5,13 @@ packer {
       source  = "github.com/hashicorp/amazon"
     }
 
+    /*
     azure = {
       version = ">= 1.0.7" # again https://github.com/hashicorp/packer-plugin-azure/releases/tag/v1.0.7
       source  = "github.com/hashicorp/azure"
     }
+*/
+
   }
 }
 
@@ -22,6 +25,7 @@ data "hcp-packer-iteration" "base-image" {
 }
 
 
+/*
 data "hcp-packer-image" "azure-base-image" {
   bucket_name    = "base-image"
   iteration_id   = data.hcp-packer-iteration.base-image.id
@@ -44,6 +48,7 @@ source "azure-arm" "base" {
 
   ssh_username = "ubuntu"
 }
+*/
 
 
 data "hcp-packer-image" "aws-base-image" {
@@ -96,7 +101,7 @@ build {
 
   sources = [
     "source.amazon-ebs.base",
-    "source.azure-arm.base",
+    #    "source.azure-arm.base",
   ]
 
   provisioner "file" {

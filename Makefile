@@ -5,10 +5,11 @@ default: build
 build: terraform base webserver
 
 terraform:
-	@echo "========================================"
-	@echo "Provisioning TF Resources"
-	@echo "========================================"
-	cd ./terraform && terraform init && terraform apply -auto-approve
+	@echo skipping TF for now
+	#@echo "========================================"
+	#@echo "Provisioning TF Resources"
+	#@echo "========================================"
+	#cd ./terraform && terraform init && terraform apply -auto-approve
 
 
 base:

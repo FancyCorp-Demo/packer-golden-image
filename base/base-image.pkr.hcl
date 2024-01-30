@@ -5,10 +5,12 @@ packer {
       source  = "github.com/hashicorp/amazon"
     }
 
+    /*
     azure = {
       version = ">= 1.0.7" # again https://github.com/hashicorp/packer-plugin-azure/releases/tag/v1.0.7
       source  = "github.com/hashicorp/azure"
     }
+*/
   }
 }
 
@@ -16,6 +18,7 @@ local "suffix" {
   expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }
 
+/*
 source "azure-arm" "ubuntu" {
   use_azure_cli_auth = true
 
@@ -33,6 +36,7 @@ source "azure-arm" "ubuntu" {
 
   ssh_username = "ubuntu"
 }
+*/
 
 source "amazon-ebs" "ubuntu" {
   ami_name = "strawbtest/demo/base/v0.1.0/${local.suffix}"
@@ -85,7 +89,7 @@ build {
 
   sources = [
     "source.amazon-ebs.ubuntu",
-    "source.azure-arm.ubuntu",
+    #    "source.azure-arm.ubuntu",
   ]
 
   provisioner "shell" {
