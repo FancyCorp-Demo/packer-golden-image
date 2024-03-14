@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome to nginx!</title>
+<title>Business Critical Webserver</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
 <style>
     body {
         width: 35em;
@@ -16,9 +19,7 @@
     img {
         width: 100%;
     }
-    pre {
-        background: #444;
-        color: white;
+    code {
         padding: 10px;
         border: 5px solid green;
     }
@@ -34,6 +35,7 @@ function init() {
     })
    .then(function (json) {
      document.getElementById("identity").innerHTML = JSON.stringify(json, null, 2);
+     hljs.highlightAll();
      console.log(json);
   });
 }
@@ -48,7 +50,7 @@ function init() {
 
 <h1>Welcome to this Business Critical Webserver</h1>
 <p>You are talking to:</p>
-<pre id="identity"></pre>
+<pre><code id="identity"></code></pre>
 </div>
 
 </body>
