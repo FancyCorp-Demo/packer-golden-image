@@ -16,11 +16,26 @@
     img {
         width: 100%;
     }
+    pre {
+        background: #444;
+        color: white;
+        padding: 10px;
+        border: 5px solid green;
+    }
 </style>
 
 <script type="text/javascript">
 function init() {
   document.body.style.background = 'url(https://picsum.photos/'+window.screen.width+'/'+window.screen.height+'?blur=10&grayscale) no-repeat center center'
+
+  fetch('/identity')
+    .then(function (response) {
+      return response.json();
+    })
+   .then(function (json) {
+     document.getElementById("identity").innerHTML = JSON.stringify(json, null, 2);
+     console.log(json);
+  });
 }
 </script>
 
@@ -32,8 +47,8 @@ function init() {
 <img src="https://picsum.photos/560/400" />
 
 <h1>Welcome to this Business Critical Webserver</h1>
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
+<p>You are talking to:</p>
+<pre id="identity"></pre>
 </div>
 
 </body>

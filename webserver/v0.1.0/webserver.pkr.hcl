@@ -109,11 +109,17 @@ build {
     destination = "/home/ubuntu/index.html"
   }
 
+  provisioner "file" {
+    source      = "default"
+    destination = "/home/ubuntu/default"
+  }
+
   provisioner "shell" {
     inline = [
       "sudo apt-get -yq update",
       "sudo apt-get -yq install nginx",
       "sudo mv /home/ubuntu/index.html /var/www/html/index.html",
+      "sudo mv /home/ubuntu/default /etc/nginx/sites-available/default",
     ]
   }
 
