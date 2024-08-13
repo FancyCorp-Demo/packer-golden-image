@@ -28,3 +28,20 @@ provider "aws" {
   }
   region = var.aws-region
 }
+
+
+module "oidc_github" {
+  source  = "unfunco/oidc-github/aws"
+  version = "1.8.0"
+
+  github_repositories = [
+    "FancyCorp-Demo/packer-golden-image",
+
+    # TODO: be more specific; only allow the "main" branch initially
+    # see https://registry.terraform.io/modules/unfunco/oidc-github/aws/latest for example
+    # "another-org/another-repo:ref:refs/heads/main",
+    #
+    # Future versions, we could figure out how to do this for PRs... for approved users (i.e. me)
+
+  ]
+}
