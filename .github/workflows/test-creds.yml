@@ -3,11 +3,10 @@ name: Test Creds
 on: workflow_dispatch
 
 
-# Test from https://registry.terraform.io/modules/unfunco/oidc-github/aws/latest
+# Test based on https://registry.terraform.io/modules/unfunco/oidc-github/aws/latest
 jobs:
   aws-caller-identity:
     name: Check caller identity
-    environment: aws-sandbox
     permissions:
       contents: read
       id-token: write
@@ -16,8 +15,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: ${{ env.AWS_REGION }}
-        role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github
+        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github
     - run: aws sts get-caller-identity
 
 # TODO: need HCP Creds next
