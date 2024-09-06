@@ -21,6 +21,8 @@ jobs:
     - run: aws sts get-caller-identity
 
     # TODO: need HCP Creds next
+    # For now, we're syncing them over to GHA from HCP Vault Secrets
+    # https://portal.cloud.hashicorp.com/services/secrets/apps/packer-build/secrets?project_id=d6c96d2b-616b-4cb8-b78c-9e17a78c2167
 
 
 
@@ -50,6 +52,9 @@ jobs:
     - name: Run `packer build`
       id: build
       working-directory: ./base
+      env:
+        HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+        HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
       run: "packer build ."
 
       # TODO: validate image... though in this case, just promote
