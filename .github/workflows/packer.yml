@@ -1,0 +1,56 @@
+name: Packer Build
+
+on: workflow_dispatch
+
+
+jobs:
+  build:
+    name: Base Image
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+
+    # AWS Creds
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github
+    - run: aws sts get-caller-identity
+
+    # TODO: need HCP Creds next
+
+
+
+    #
+    # Packer Build
+    #
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup `packer`
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: latest
+
+    - name: Run `packer init`
+      id: init
+      working-directory: ./base
+      run: "packer init -upgrade ."
+
+    - name: Run `packer validate`
+      id: validate
+      working-directory: ./base
+      run: "packer validate ."
+
+    - name: Run `packer build`
+      id: build
+      working-directory: ./base
+      run: "packer build ."
+
+      # TODO: validate image... though in this case, just promote
+
