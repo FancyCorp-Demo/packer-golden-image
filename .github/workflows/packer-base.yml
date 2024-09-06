@@ -1,11 +1,11 @@
-name: Packer Build Webserver
+name: Packer Build Base
 
 on: workflow_dispatch
 
 
 jobs:
   build:
-    name: Webserver Image
+    name: Base Image
     permissions:
       contents: read
       id-token: write
@@ -41,17 +41,17 @@ jobs:
 
     - name: Run `packer init`
       id: init
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./base
       run: "packer init -upgrade ."
 
     - name: Run `packer validate`
       id: validate
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./base
       run: "packer validate ."
 
     - name: Run `packer build`
       id: build
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./base
       env:
         HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
         HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
