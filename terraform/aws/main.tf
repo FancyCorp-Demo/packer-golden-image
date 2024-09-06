@@ -29,6 +29,8 @@ provider "aws" {
   region = var.aws-region
 }
 
+# TODO: policy to build AMIs
+
 
 module "oidc_github" {
   source  = "unfunco/oidc-github/aws"
@@ -43,5 +45,9 @@ module "oidc_github" {
     #
     # Future versions, we could figure out how to do this for PRs... for approved users (i.e. me)
 
+  ]
+
+  iam_role_policy_arns = [
+    "arn:aws:iam::aws:policy/AdministratorAccess"
   ]
 }
