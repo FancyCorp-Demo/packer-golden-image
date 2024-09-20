@@ -6,11 +6,30 @@
   <script src="scripts.js"></script>
 
   <style>
+    :root {
+      --tf-color: #7B42BC;
+    }
+
     .org {
-      border: 1px solid purple;
+      border: 1px solid var(--tf-color);
       border-radius: 5px;
       margin: 5px;
       padding: 5px;
+    }
+
+    .project {
+      border: 1px solid var(--tf-color);
+      border-radius: 5px;
+      margin: 5px;
+      padding: 5px;
+      display: inline-block
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--tf-color);
+      font-family: sans-serif;
+      font-size: 1em
     }
   </style>
 </head>
@@ -33,11 +52,10 @@
   <p>
     <button id="show-dialog">Set TFE_TOKEN</button>
     <button id="list-orgs">List Orgs</button>
+    <button id="list-projects">List Projects</button>
   </p>
 
   <div id="visual"></div>
-
-  <pre id="response"></pre>
 
 </body>
 
