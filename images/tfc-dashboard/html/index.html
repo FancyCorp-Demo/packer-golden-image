@@ -8,6 +8,8 @@
   <style>
     :root {
       --tf-color: #7B42BC;
+      --success-color: lightgreen;
+      --error-color: red;
     }
 
     .org {
@@ -22,7 +24,27 @@
       border-radius: 5px;
       margin: 5px;
       padding: 5px;
-      display: inline-block
+      display: inline-block;
+      max-width: 400px;
+    }
+
+    .workspace {
+      border: 1px solid var(--tf-color);
+      border-radius: 5px;
+      margin: 1px;
+      margin-bottom: 0px;
+      padding: 5px;
+      display: inline-block;
+      min-height: 10px;
+      min-width: 10px;
+    }
+
+    .workspace.success {
+      background: var(--success-color);
+    }
+
+    .workspace.error {
+      background: var(--error-color);
     }
 
     h1 {

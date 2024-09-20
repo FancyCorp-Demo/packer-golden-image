@@ -140,6 +140,20 @@ function visualise() {
 
 
       // TODO: workspaces
+
+      for (l = 0; l < 10; l++) {
+        workspaceDiv = document.createElement('div');
+        projectDiv.append(workspaceDiv)
+
+        workspaceDiv.classList.add('workspace')
+
+        // TODO: We probably want a few states here. I'm thinking at least: 
+        if (Math.random() < 0.8) {
+          workspaceDiv.classList.add('success')
+        } else {
+          workspaceDiv.classList.add('error')
+        }
+      }
     }
 
 
