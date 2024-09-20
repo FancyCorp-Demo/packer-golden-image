@@ -41,17 +41,17 @@ jobs:
 
     - name: Run `packer init`
       id: init
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./images/webserver/
       run: "packer init -upgrade ."
 
     - name: Run `packer validate`
       id: validate
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./images/webserver/
       run: "packer validate ."
 
     - name: Run `packer build`
       id: build
-      working-directory: ./webserver/v0.1.0/
+      working-directory: ./images/webserver/
       env:
         HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
         HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
