@@ -1,0 +1,61 @@
+name: Packer Build TFC Dashboard
+
+on: workflow_dispatch
+
+
+jobs:
+  build:
+    name: TFC Dashboard Image
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+
+    # AWS Creds
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github
+    - run: aws sts get-caller-identity
+
+    # TODO: need HCP Creds next
+    # For now, we're syncing them over to GHA from HCP Vault Secrets
+    # https://portal.cloud.hashicorp.com/services/secrets/apps/packer-build/secrets?project_id=d6c96d2b-616b-4cb8-b78c-9e17a78c2167
+
+
+
+    #
+    # Packer Build
+    #
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup `packer`
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: latest
+
+    - name: Run `packer init`
+      id: init
+      working-directory: ./images/tfc-dashboard/
+      run: "packer init -upgrade ."
+
+    - name: Run `packer validate`
+      id: validate
+      working-directory: ./images/tfc-dashboard/
+      run: "packer validate ."
+
+    - name: Run `packer build`
+      id: build
+      working-directory: ./images/tfc-dashboard/
+      env:
+        HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+        HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+      run: "packer build ."
+
+      # TODO: validate image... though in this case, just promote
+

@@ -30,3 +30,9 @@ webserver-no-channel:
 	@echo "Building Webserver Image"
 	@echo "========================================"
 	cd webserver/v0.1.0 && ./build.sh --no-channel
+
+tfc-dashboard:
+	@echo "========================================"
+	@echo "Building TFC Dashboard Image"
+	@echo "========================================"
+	cd images/tfc-dashboard && ./build.sh

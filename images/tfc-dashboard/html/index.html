@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HCP Terraform Dashboard</title>
+  <script src="scripts.js"></script>
+
+  <style>
+    .org {
+      border: 1px solid purple;
+      border-radius: 5px;
+      margin: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body onload="init()">
+
+  <dialog id="dialog">
+    <form method="dialog">
+      <p>
+        <label>
+          TFE_TOKEN:
+          <input id="api-token" type="password" required />
+        </label>
+      </p>
+      <div>
+        <input type="submit" id="normal-close" value="Save" />
+      </div>
+    </form>
+  </dialog>
+  <p>
+    <button id="show-dialog">Set TFE_TOKEN</button>
+    <button id="list-orgs">List Orgs</button>
+  </p>
+
+  <div id="visual"></div>
+
+  <pre id="response"></pre>
+
+</body>
+
+</html>
