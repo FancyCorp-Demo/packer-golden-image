@@ -7,6 +7,11 @@ packer {
   }
 }
 
+variable "image_version" {
+  type    = string
+  default = "v0.1.0"
+}
+
 local "suffix" {
   expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }

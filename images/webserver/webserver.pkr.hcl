@@ -15,6 +15,11 @@ packer {
   }
 }
 
+variable "image_version" {
+  type    = string
+  default = "v0.1.0"
+}
+
 local "suffix" {
   expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }
@@ -44,7 +49,7 @@ source "azure-arm" "base" {
   build_resource_group_name = "strawb-packerdemo"
 
   managed_image_resource_group_name = "strawb-packerdemo"
-  managed_image_name                = "strawbtest-demo-webserver-from-base-v0.1.0-${local.suffix}"
+  managed_image_name                = "strawbtest-demo-webserver-from-base-${var.image_version}-${local.suffix}"
 
   ssh_username = "ubuntu"
 }
@@ -58,7 +63,7 @@ data "hcp-packer-image" "aws-base-image" {
   region         = "eu-west-2"
 }
 source "amazon-ebs" "base" {
-  ami_name = "strawbtest/demo/webserver-from-base/v0.1.0/${local.suffix}"
+  ami_name = "strawbtest/demo/webserver-from-base/${var.image_version}/${local.suffix}"
 
   instance_type = "t2.micro"
 
@@ -86,7 +91,7 @@ source "amazon-ebs" "base" {
     Purpose = "Dummy Webserver for TFC Demo"
     TTL     = "30d"
     Packer  = true
-    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/webserver/v0.1.0/"
+    Source  = "https://github.com/hashi-strawb/packer-golden-image/tree/main/webserver/${var.image_version}/"
   }
 
   # Tell AWS to deprecate the image after 30 days
@@ -159,7 +164,7 @@ Dummy webserver for demonstration purposes
     build_labels = {
       "os"             = "Ubuntu"
       "ubuntu-version" = "Jammy 22.04"
-      "version"        = "v0.1.0"
+      "version"        = "${var.image_version}"
     }
   }
 }
