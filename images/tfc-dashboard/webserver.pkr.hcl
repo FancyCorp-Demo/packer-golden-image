@@ -93,6 +93,28 @@ build {
     ]
   }
 
+
+  #
+  # SBOM
+  # https://developer.hashicorp.com/packer/tutorials/hcp/track-artifact-package-metadata?product_intent=packer&utm_source=bambu#generate-the-software-bill-of-materials
+  #
+
+  # Run trivy to generate the SBOM
+  provisioner "shell" {
+    inline = [
+      "trivy fs --format cyclonedx --output /tmp/sbom_cyclonedx_${var.image_version}.json /"
+    ]
+  }
+
+  # Upload SBOM
+  provisioner "hcp-sbom" {
+    source      = "/tmp/sbom_cyclonedx_${var.image_version}.json"
+    destination = "sbom_cyclonedx_${var.image_version}.json"
+    sbom_name   = "sbom-cyclonedx-ubuntu"
+  }
+
+
+
   hcp_packer_registry {
     bucket_name = "tfc-dashboard"
 

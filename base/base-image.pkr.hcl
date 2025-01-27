@@ -129,6 +129,10 @@ build {
     sbom_name   = "sbom-cyclonedx-ubuntu"
   }
 
+
+
+
+
   hcp_packer_registry {
     bucket_name = "base-image"
 
