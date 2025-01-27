@@ -14,6 +14,11 @@ packer {
   }
 }
 
+variable "image_version" {
+  type    = string
+  default = "v0.1.0"
+}
+
 local "suffix" {
   expression = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }
@@ -32,14 +37,14 @@ source "azure-arm" "ubuntu" {
   build_resource_group_name = "strawb-packerdemo"
 
   managed_image_resource_group_name = "strawb-packerdemo"
-  managed_image_name                = "strawbtest-demo-base-v0.1.0-${local.suffix}"
+  managed_image_name                = "strawbtest-demo-base-${var.image_version}-${local.suffix}"
 
   ssh_username = "ubuntu"
 }
 */
 
 source "amazon-ebs" "ubuntu" {
-  ami_name = "strawbtest/demo/base/v0.1.0/${local.suffix}"
+  ami_name = "strawbtest/demo/base/${var.image_version}/${local.suffix}"
 
   instance_type = "t2.micro"
 
@@ -96,6 +101,33 @@ build {
     script = "provision.sh"
   }
 
+
+  #
+  # SBOM
+  # https://developer.hashicorp.com/packer/tutorials/hcp/track-artifact-package-metadata?product_intent=packer&utm_source=bambu#generate-the-software-bill-of-materials
+  #
+
+  # Install trivy
+  provisioner "shell" {
+    inline = [
+      "curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin latest"
+    ]
+  }
+
+  # Run trivy to generate the SBOM
+  provisioner "shell" {
+    inline = [
+      "trivy fs --format cyclonedx --output /tmp/sbom_cyclonedx_${var.image_version}.json /"
+    ]
+  }
+
+  # Upload SBOM
+  provisioner "hcp-sbom" {
+    source      = "/tmp/sbom_cyclonedx_${var.image_version}.json"
+    destination = "sbom_cyclonedx_${var.image_version}.json"
+    sbom_name   = "sbom-cyclonedx-ubuntu"
+  }
+
   hcp_packer_registry {
     bucket_name = "base-image"
 
@@ -110,7 +142,7 @@ Golden Base Image
     build_labels = {
       "os"             = "Ubuntu"
       "ubuntu-version" = "Jammy 22.04"
-      "version"        = "v0.1.0"
+      "version"        = "${var.image_version}"
     }
   }
 }
